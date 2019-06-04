@@ -1,5 +1,7 @@
 # PayU IPN HMAC Signature Checker
 
+[Application is running here](https://payu-hmac.github.io/)
+
 PayU sends IPN notifications in order to confirm a new purchase with the Merchant system. These
 messages need to be validated using a HMAC MD5 signature built by both parties using a shared secret 
 key.
