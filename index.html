@@ -107,6 +107,17 @@
                 },
                 url: function () {
 
+                },
+                getByteLength: function (str) {
+                    /**
+                     * PayU does not properly count the multi byte string length.
+                     *
+                     * Used this script to get the string length in bytes
+                     * https://stackoverflow.com/questions/5515869/string-length-in-bytes-in-javascript#5515960
+                     */
+                    //return str.length;
+                    var m = encodeURIComponent(str).match(/%[89ABab]/g);
+                    return str.length + (m ? m.length : 0);
                 }
             },
             computed: {
@@ -134,7 +145,8 @@
                             value = '';
                         }
                         value = String(value);
-                        source = source.concat('<b>' + value.length + '</b>', value);
+                        var length = this.getByteLength(value);
+                        source = source.concat('<b>' + length + '</b>', value);
                     }
                     return source;
                 },
@@ -144,7 +156,7 @@
                 hash: function ()
                 {
                     return CryptoJS.enc.Hex.stringify(CryptoJS.HmacMD5(this.source_string, this.secret_key));
-                },
+                }
             }
         })
     </script>
